@@ -468,9 +468,8 @@ impl<'pool, FLBitmap: BinInteger, SLBitmap: BinInteger, const FLLEN: usize, cons
         let unaligned_start = block.as_ptr() as *mut u8;
         let start = round_up(unaligned_start, GRANULARITY);
 
-        let len = if let Some(x) = len
-            .checked_sub((start as usize).wrapping_sub(unaligned_start as usize))
-            .filter(|&x| x >= GRANULARITY * 2)
+        let len = if let Some(x) =
+            len.checked_sub((start as usize).wrapping_sub(unaligned_start as usize))
         {
             // Round down
             x & !(GRANULARITY - 1)
